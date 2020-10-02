@@ -1,10 +1,66 @@
 // STEP 3: Create article cards.
 // -----------------------
 // Send an HTTP GET request to the following address: https://lambda-times-api.herokuapp.com/articles
-// Study the response data you get back, closely.
-// You will be creating a card for each article in the response.
-// This won't be as easy as just iterating over an array though.
-//
+
+import axios from 'axios';
+axios.get('https://lambda-times-api.herokuapp.com/articles').then(res => {
+  // console.log(res.data.articles);
+
+  // SET ARRAY
+  const bootstrap = res.data.articles.bootstrap;
+  const javascript = res.data.articles.javascript;
+  const jquery = res.data.articles.jquery;
+  const node = res.data.articles.node;
+  const technology = res.data.articles.technology;
+  const topicArray = [javascript, bootstrap, technology, jquery, node]
+  console.log(topicArray)
+
+  // MEAT AND POTATOES
+  topicArray.forEach(topics => {
+    topics.forEach(card => {
+      makeCard(card)
+    })
+  })
+
+
+
+}).catch(err => {
+  console.log(err);
+})
+
+
+
+
+const cardsContainer = document.querySelector('.cards-container')
+
+function makeCard(data) {
+
+  // CREATE AND ADD CLASSES
+  const card = document.createElement('div')
+  card.classList.add('card');
+  const headline = document.createElement('div')
+  headline.classList.add('headline')
+  const author = document.createElement('div')
+  author.classList.add('author')
+  const authorImgContainer = document.createElement('div')
+  authorImgContainer.classList.add('img-container')
+  const authorImg = document.createElement('img')
+  const byName = document.createElement('span')
+
+  headline.textContent = `${data.headline}`
+  authorImg.src = `${data.authorPhoto}`
+  byName.textContent = `${data.authorName}`
+
+  // APPEND THEM
+  card.appendChild(headline)
+  card.appendChild(author)
+  author.appendChild(authorImgContainer)
+  authorImgContainer.appendChild(authorImg)
+  author.appendChild(byName)
+
+  cardsContainer.appendChild(card)
+}
+
 // Write a function that takes a single article object and returns the following markup:
 //
 // <div class="card">
