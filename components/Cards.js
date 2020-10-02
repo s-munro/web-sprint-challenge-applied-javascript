@@ -22,13 +22,9 @@ axios.get('https://lambda-times-api.herokuapp.com/articles').then(res => {
     })
   })
 
-
-
 }).catch(err => {
   console.log(err);
 })
-
-
 
 
 const cardsContainer = document.querySelector('.cards-container')
@@ -47,6 +43,7 @@ function makeCard(data) {
   const authorImg = document.createElement('img')
   const byName = document.createElement('span')
 
+  // TEXT CONTENT
   headline.textContent = `${data.headline}`
   authorImg.src = `${data.authorPhoto}`
   byName.textContent = `${data.authorName}`
@@ -58,9 +55,16 @@ function makeCard(data) {
   authorImgContainer.appendChild(authorImg)
   author.appendChild(byName)
 
+  // APPEND TO DOM
   cardsContainer.appendChild(card)
-}
 
+  // EVENT LISTENER
+  headline.addEventListener('click', (e) => {
+    console.log(headline.textContent);
+  })
+
+
+}
 // Write a function that takes a single article object and returns the following markup:
 //
 // <div class="card">
